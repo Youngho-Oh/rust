@@ -1,0 +1,9 @@
+cargo new $1
+cd $1
+touch make.sh
+chmod +x make.sh
+echo "cargo build" >> make.sh
+echo "cargo run" >> make.sh
+touch clean.sh
+chmod +x clean.sh
+echo "cargo clean" >> clean.sh
