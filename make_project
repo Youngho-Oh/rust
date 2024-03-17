@@ -7,3 +7,6 @@ echo "cargo run" >> make.sh
 touch clean.sh
 chmod +x clean.sh
 echo "cargo clean" >> clean.sh
+touch test.sh
+chmod +x test.sh
+echo "cargo test" >> test.sh
