@@ -1,6 +1,7 @@
 use std::env;
 use text_colorizer::*;
 use std::fs;
+use regex::Regex;
 
 #[derive(Debug)]
 struct Arguments {
@@ -13,6 +14,42 @@ struct Arguments {
 fn main() {
     let args = parse_args();
     println!("{:?}", args);
+
+    let data = match fs::read_to_string(&args.filename) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("{} failed to read from file '{}': {:?}",
+                    "Error:".red().bold(), args.filename, e);
+            std::process::exit(1);
+        }
+    };
+
+    match fs::write(&args.output, &data) {
+        Ok(_) => {},
+        Err(e) => {
+            eprintln!("{} failed to write to file '{}': {:?}",
+                    "Error:".red().bold(), args.output, e);
+            std::process::exit(1);
+        }
+    };
+
+    let replaced_data = match replace(&args.target, &args.replacement, &data) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("{} failed to replace text: {:?}",
+                    "Error:".red().bold(), e);
+            std::process::exit(1);
+        }
+    };
+
+    match fs::write(&args.output, replaced_data) {
+        Ok(_) => {},
+        Err(e) => {
+            eprintln!("{} failed to write to file '{}': {:?}",
+                    "Error:".red().bold(), args.output, e);
+            std::process::exit(1);
+        }
+    };
 }
 
 fn print_usage() {
@@ -37,4 +74,15 @@ fn parse_args() -> Arguments {
         filename: args[2].clone(),
         output: args[3].clone()
     }
+}
+
+fn replace(target: &str, replacement: &str, text: &str) -> Result<String, std::io::Error> {
+    let regex = match Regex::new(target) {        
+        Ok(f) => f,
+        Err(e) => {
+            return Err(e);
+        }
+    };
+
+    Ok(regex.replace_all(text, replacement).to_string())
 }
