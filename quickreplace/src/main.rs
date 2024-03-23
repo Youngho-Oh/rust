@@ -76,7 +76,7 @@ fn parse_args() -> Arguments {
     }
 }
 
-fn replace(target: &str, replacement: &str, text: &str) -> Result<String, std::io::Error> {
+fn replace(target: &str, replacement: &str, text: &str) -> Result<String, regex::Error> {
     let regex = match Regex::new(target) {        
         Ok(f) => f,
         Err(e) => {
