@@ -1,12 +1,19 @@
 cargo new $1
 cd $1
-touch make.sh
-chmod +x make.sh
-echo "cargo build" >> make.sh
-echo "cargo run" >> make.sh
+touch make_debug.sh
+chmod +x make_debug.sh
+echo "cargo build" >> make_debug.sh
+echo "cargo run" >> make_debug.sh
+
+touch make_release.sh
+chmod +x make_release.sh
+echo "cargo build --release" >> make_release.sh
+echo "cargo run --release" >> make_release.sh
+
 touch clean.sh
 chmod +x clean.sh
 echo "cargo clean" >> clean.sh
+
 touch test.sh
 chmod +x test.sh
 echo "cargo test" >> test.sh
