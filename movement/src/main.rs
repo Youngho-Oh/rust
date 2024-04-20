@@ -1,5 +1,12 @@
 struct Person { name: Option<String>, birth: i32 }
 
+#[derive(Copy, Clone)]
+struct Labelcopy { number: u32 }
+struct Label { number: u32 }
+
+fn print(l: Label) -> Label { println!("STAMP: {}", l.number); return l; }
+fn printcopy(l: Labelcopy) { println!("STAMP: {}", l.number); }
+
 fn main() {
     let mut v = Vec::new();
     for i in 101 .. 106 {
@@ -36,4 +43,12 @@ fn main() {
     let first_name = composers[0].name.take();
     println!("{:?}", first_name);
     println!("{:?}", composers[0].name);
+
+    let mut l = Label{ number: 3 };
+    l = print(l);
+    println!( "My label number is: {}", l.number );
+
+    let k = Labelcopy{ number: 5 };
+    printcopy(k);
+    println!( "My label number is: {}", k.number );
 }
