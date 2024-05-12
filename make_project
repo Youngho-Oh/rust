@@ -10,7 +10,8 @@ chmod +x make_release.sh
 echo "cargo build --release" >> make_release.sh
 echo "cargo run --release" >> make_release.sh
 
-brew install arm-linux-gnueabihf-binutils
+#brew install arm-linux-gnueabihf-binutils
+#wget https://github.com/messense/homebrew-macos-cross-toolchains/releases/download/v13.2.0/arm-unknown-linux-gnueabihf-x86_64-darwin.tar.gz
 rustup target add armv7-unknown-linux-musleabihf
 touch make_x_debue.sh
 chmod +x make_x_debue.sh
